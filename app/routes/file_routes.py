@@ -3,7 +3,7 @@ from flask import Blueprint, request, jsonify, send_from_directory, current_app
 
 file_bp = Blueprint('file_bp', __name__)
 
-# Upload file endpoint
+# Uploading  file endpoint
 @file_bp.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -16,13 +16,13 @@ def upload_file():
     file.save(file_path)
     return jsonify({'message': 'File uploaded successfully'}), 201
 
-# List uploaded files
+# List of uploaded files
 @file_bp.route('/', methods=['GET'])
 def list_files():
     files = os.listdir(current_app.config['UPLOAD_FOLDER'])
     return jsonify({'files': files})
 
-# Download file by name
+# For Downloading file by name
 @file_bp.route('/<filename>', methods=['GET'])
 def get_file(filename):
     return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
